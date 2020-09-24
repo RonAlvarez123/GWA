@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2nd Sem GWA</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        *:focus {
+            outline: none;
+        }
+
+        body {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .notif {
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 5px 0 5px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .mainContainer {
+            background-color: #eee;
+            border: 1px solid gray;
+            border-radius: 5px;
+            margin: 5px 5px 0 5px;
+            width: 95vw;
+        }
+
+        header {
+            border-bottom: 1px solid gray;
+            display: flex;
+            font-size: 4vw;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header1 {
+            background-color: rgb(13, 118, 189);
+            border-radius: 5px 0 0 0;
+            border-right: 1px solid gray;
+            color: white;
+            padding: 1vw 0vw;
+            width: 58%;
+        }
+
+        .header2 {
+            border-radius: 0 5px 0 0;
+            padding: 1vw;
+            width: 42%;
+        }
+
+        main {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .sem {
+            padding: 0 5px 15px 5px;
+        }
+
+        .subjectsContainer {
+            border-bottom: 2px solid gray;
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .subjectsContainer input {
+            width: 100%;
+        }
+
+        .subjectCode {
+            width: 50%;
+        }
+
+        .grade {
+            margin: 0 5px;
+            width: 35%;
+        }
+
+        .remove {
+            background-color: rgb(235, 53, 53);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            width: 15%;
+            transition: background-color 500ms, box-shadow 500ms;
+        }
+
+        .remove:hover {
+            background-color: rgb(168, 11, 11);
+            box-shadow: 0 0 4px rgb(131, 8, 8);
+        }
+
+        .compute,
+        .OR,
+        .addContainer {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .compute,
+        .addContainer,
+        .repeatContainer {
+            height: 40px;
+        }
+
+        .compute button,
+        .add,
+        .repeatContainer button {
+            border-radius: 5px;
+            font-weight: bold;
+            height: 100%;
+            margin: 0 auto;
+            padding: 4px 5px;
+            width: 60%;
+            transition: background-color 500ms, color 500ms;
+        }
+
+        .compute button {
+            border: 2px solid rgb(9, 190, 24);
+            color: rgb(9, 190, 24);
+        }
+
+        .compute button:hover {
+            background-color: rgb(9, 190, 24);
+            color: white;
+        }
+
+        .OR {
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .add,
+        .repeatContainer button {
+            border: 2px solid rgb(13, 118, 189);
+            color: rgb(13, 118, 189);
+        }
+
+        .add:hover,
+        .repeatContainer button:hover {
+            background-color: rgb(13, 118, 189);
+            color: white;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        input::placeholder {
+            color: black;
+        }
+
+        .result {
+            display: none;
+            height: 200px;
+        }
+
+        .gwaContainer,
+        .description {
+            align-items: center;
+            display: flex;
+            flex-basis: 33%;
+            justify-content: center;
+        }
+
+        .gwa,
+        .description {
+            font-weight: bold;
+        }
+
+        .repeatContainer {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            overflow: hidden;
+            width: 95vw;
+        }
+
+        .repeatContainer button {
+            display: none;
+            position: relative;
+            transform: translate(200%, 0);
+            transition: transform 250ms;
+        }
+
+        @media screen and (min-width: 400px) {
+
+            .mainContainer,
+            .repeatContainer {
+                width: 90vw;
+            }
+
+            .subjectCode {
+                width: 60%;
+            }
+
+            .grade {
+                width: auto;
+            }
+
+            .remove {
+                width: 40px;
+            }
+        }
+
+        @media screen and (min-width: 500px) {
+
+            .mainContainer,
+            .repeatContainer {
+                width: 500px;
+            }
+
+            header {
+                font-size: 18px;
+            }
+
+            input {
+                font-size: 16px;
+            }
+
+            .compute button,
+            .add,
+            .repeatContainer button {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="notif"></div>
+    <div class="mainContainer">
+        <header>
+            <h2 class="header1">2nd Sem Grades</h2>
+            <h2 class="header2">Total GWA</h2>
+        </header>
+        <main>
+            <div class="sem">
+                <section class="subjects"></section>
+                <div class="compute">
+                    <button>Compute Now</button>
+                </div>
+                <div class="OR">
+                    <p>or</p>
+                </div>
+                <div class="addContainer">
+                    <button class="add">+ Add Subject</button>
+                </div>
+            </div>
+            <div class="result">
+                <div class="gwaContainer">
+                    <h2>GWA: </h2>
+                    <h2 class="gwa"></h2>
+                </div>
+                <p class="description"></p>
+            </div>
+        </main>
+    </div>
+    <div class="repeatContainer">
+        <button>Compute Again</button>
+    </div>
+
+
+    <script>
+        let headers = document.querySelectorAll('header h2');
+        let subjects = document.querySelector('.subjects');
+        let addSubject = document.querySelector('.add');
+        let compute = document.querySelector('.compute button');
+        let notif = document.querySelector('.notif');
+        let repeat = document.querySelector('.repeatContainer button');
+        let result = document.querySelector('.result');
+        let sem = document.querySelector('.sem');
+
+        addSubject.addEventListener('click', addNewSubject);
+        subjects.addEventListener('click', removeCurrentSubject);
+        compute.addEventListener('click', computeGrades);
+        repeat.addEventListener('click', computeAgain);
+
+        function addNewSubject() {
+            let content = `<div class="subjectCode">
+                                <input type="text" placeholder="Code/Name">
+                            </div>
+                            <div class="grade">
+                                <input type="number" placeholder="Grade">
+                            </div>
+                            <button class="remove">x</button>`;
+            let subjectsContainer = document.createElement('div');
+            subjectsContainer.classList.add('subjectsContainer');
+            subjectsContainer.innerHTML = content;
+            subjects.appendChild(subjectsContainer);
+        }
+
+        function removeCurrentSubject(e) {
+            if (e.target.classList.contains('remove')) {
+                subjects.removeChild(e.target.parentElement);
+            }
+        }
+
+        function computeGrades() {
+            let total = 0;
+            let invalid = 0;
+            let gradeInputs = Array.from(subjects.querySelectorAll('.grade input'));
+            if (gradeInputs.length <= 1) {
+                notif.innerHTML = 'Grade inputs should be greater than 2';
+                redNotif();
+            }
+            else {
+                whiteNotif();
+                gradeInputs.forEach(item => {
+                    if (Number(item.value) < 1 || Number(item.value) > 5 || item.value.replace(/\s/g, '').length == 0) {
+                        item.style.backgroundColor = 'rgb(212, 150, 150)';
+                        item.style.border = '1px solid rgb(146, 12, 12)';
+                        invalid++;
+                    }
+                    else {
+                        item.style.backgroundColor = 'white';
+                        item.style.border = '1px solid gray';
+                        total += Number(item.value)
+                    }
+                });
+                if (invalid > 0) {
+                    notif.innerHTML = 'Grades should be from 5.00 to 1.00';
+                    redNotif();
+                }
+                else {
+                    whiteNotif();
+                    total /= gradeInputs.length;
+                    total = total.toFixed(2);
+
+                    let detail = '';
+                    let gwa = result.querySelector('.gwa');
+                    let description = result.querySelector('.description');
+
+                    if (total > 3.00) {
+                        detail = 'Failed :(';
+                        description.style.color = 'red';
+                    }
+                    else {
+                        description.style.color = 'black';
+                        if (total <= 3.00 && total > 2.75) {
+                            detail = 'Passed';
+                        }
+                        else if (total <= 2.75 && total > 2.50) {
+                            detail = 'Fair';
+                        }
+                        else if (total <= 2.50 && total > 2.25) {
+                            detail = 'Fairly Satisfactory';
+                        }
+                        else if (total <= 2.25 && total > 2.00) {
+                            detail = 'Satisfactory';
+                        }
+                        else if (total <= 2.00 && total > 1.75) {
+                            detail = 'Good';
+                        }
+                        else if (total <= 1.75 && total > 1.50) {
+                            detail = 'Very Good';
+                        }
+                        else if (total <= 1.50 && total > 1.25) {
+                            detail = 'Superior';
+                        }
+                        else if (total <= 1.25 && total > 1.00) {
+                            detail = 'Outstanding';
+                        }
+                        else if (total <= 1.00) {
+                            detail = 'Excellent';
+                        }
+                    }
+                    gwa.innerHTML = total;
+                    description.innerHTML = detail;
+                    sem.style.display = 'none';
+                    result.style.display = 'flex';
+                    result.style.flexDirection = 'column';
+                    headers[0].style.backgroundColor = 'transparent';
+                    headers[0].style.color = 'black';
+                    headers[1].style.backgroundColor = 'rgb(13, 118, 189)';
+                    headers[1].style.color = 'white';
+                    repeat.style.display = 'block';
+                    setTimeout(() => repeat.style.transform = 'translate(0, 0)', 100);
+                }
+            }
+        }
+
+        function computeAgain() {
+            repeat.style.transform = 'translate(-200%, 0)';
+            setTimeout(() => {
+                repeat.style.display = 'none';
+                repeat.style.transform = 'translate(200%, 0)';
+                result.style.display = 'none';
+                sem.style.display = 'block';
+                headers[0].style.backgroundColor = 'rgb(13, 118, 189)';
+                headers[0].style.color = 'white';
+                headers[1].style.backgroundColor = 'transparent';
+                headers[1].style.color = 'black';
+                subjects.innerHTML = '';
+            }, 250);
+        }
+
+        function redNotif() {
+            notif.style.backgroundColor = 'rgb(238, 142, 142)';
+            notif.style.border = '2px solid rgb(180, 16, 16)';
+            notif.style.color = 'rgb(160, 4, 4)';
+        }
+
+        function whiteNotif() {
+            notif.style.backgroundColor = 'white';
+            notif.style.border = 'white';
+            notif.style.color = 'white';
+        }
+    </script>
+</body>
+
+</html>
