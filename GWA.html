@@ -179,6 +179,7 @@
         }
 
         .gwaContainer,
+        .percentageContainer,
         .description {
             align-items: center;
             display: flex;
@@ -187,6 +188,7 @@
         }
 
         .gwa,
+        .percentage,
         .description {
             font-weight: bold;
         }
@@ -276,6 +278,9 @@
                     <h2>GWA: </h2>
                     <h2 class="gwa"></h2>
                 </div>
+                <div class="percentageContainer">
+                    <h2 class="percentage"></h2>
+                </div>
                 <p class="description"></p>
             </div>
         </main>
@@ -353,43 +358,62 @@
 
                     let detail = '';
                     let gwa = result.querySelector('.gwa');
+                    let percentageContainer = result.querySelector('.percentageContainer');
+                    let percentage = result.querySelector('.percentage');
                     let description = result.querySelector('.description');
+                    let percentageValue = '';
 
                     if (total > 3.00) {
                         detail = 'Failed :(';
+                        percentageContainer.style.display = 'none';
                         description.style.color = 'red';
                     }
                     else {
+                        percentageContainer.style.display = 'flex';
                         description.style.color = 'black';
-                        if (total <= 3.00 && total > 2.75) {
+                        if (total == 3.00) {
                             detail = 'Passed';
+                            percentageValue = '75 - 76%';
+                        }
+                        if (total < 3.00 && total > 2.75) {
+                            detail = 'Passed';
+                            percentageValue = '77 - 79%';
                         }
                         else if (total <= 2.75 && total > 2.50) {
                             detail = 'Fair';
+                            percentageValue = '80 - 82%';
                         }
                         else if (total <= 2.50 && total > 2.25) {
                             detail = 'Fairly Satisfactory';
+                            percentageValue = '83 - 84%';
                         }
                         else if (total <= 2.25 && total > 2.00) {
                             detail = 'Satisfactory';
+                            percentageValue = '85 - 86%';
                         }
                         else if (total <= 2.00 && total > 1.75) {
                             detail = 'Good';
+                            percentageValue = '87 - 89%';
                         }
                         else if (total <= 1.75 && total > 1.50) {
                             detail = 'Very Good';
+                            percentageValue = '90 - 92%';
                         }
                         else if (total <= 1.50 && total > 1.25) {
                             detail = 'Superior';
+                            percentageValue = '93 - 94%';
                         }
                         else if (total <= 1.25 && total > 1.00) {
                             detail = 'Outstanding';
+                            percentageValue = '95 - 99%';
                         }
-                        else if (total <= 1.00) {
+                        else if (total == 1.00) {
                             detail = 'Excellent';
+                            percentageValue = '100%';
                         }
                     }
                     gwa.innerHTML = total;
+                    percentage.innerHTML = percentageValue;
                     description.innerHTML = detail;
                     sem.style.display = 'none';
                     result.style.display = 'flex';
